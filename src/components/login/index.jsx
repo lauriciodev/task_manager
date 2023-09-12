@@ -7,6 +7,7 @@ import {
 import { StyledButtons } from "../../global/styles";
 import { useContext, useState } from "react";
 import { Context } from "../../context/context";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ function Login() {
 
         <ContainerButtons>
           <StyledButtons type="submit">Entrar</StyledButtons>
-          <StyledButtons>Criar conta</StyledButtons>
+          <Link to={"/user/new"}>Criar conta</Link>
         </ContainerButtons>
       </ContainerForm>
     </ContainerLogin>

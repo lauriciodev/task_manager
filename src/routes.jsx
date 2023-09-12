@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Login from "./components/login";
 import Admin from "./components/admin";
+import NewUser from "./components/newUser";
 
 const MyRoutes = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const MyRoutes = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/user/new",
+    element: <NewUser />,
   },
   {
     path: "*",
