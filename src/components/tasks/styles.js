@@ -55,3 +55,19 @@ export const StyledLabel = styled.label`
     text-align: left;
   }
 `;
+
+export const StyledMsg = styled.div`
+  border-radius: 5px;
+  display: flex;
+  width: 100%;
+  box-shadow: 1px 1px 3px #32c98840;
+  border: 1px solid #32c98840;
+  transition: all 0.4s;
+  align-items: center;
+  padding: 0px 4px;
+
+  p {
+    text-align: center;
+    width: 100%;
+  }
+`;

@@ -5,7 +5,17 @@ export const NavStyled = styled.nav`
   height: 30px;
   border-bottom: 1px solid #33a4d4;
   padding: 10px 0;
+  display: flex;
+  gap: 30px;
   button {
     margin-left: 30px;
+  }
+  p {
+    color: #33a4d4;
+
+    span {
+      color: white;
+      text-transform: capitalize;
+    }
   }
 `;

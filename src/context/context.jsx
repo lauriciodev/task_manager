@@ -1,23 +1,13 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import api from "../api/api";
 import { toast } from "react-toastify";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 const Context = createContext();
 /*eslint-disable */
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function loadDataStorage() {
-      const userStorage = JSON.parse(localStorage.getItem("user"));
-
-      if (userStorage) {
-        setUser(userStorage);
-      }
-    }
-
-    loadDataStorage();
-  }, []);
+  const [cookies, setCookie] = useCookies(["cookieName"]);
 
   async function handleLogin(event, email, password) {
     event.preventDefault();
@@ -41,6 +31,12 @@ function AuthProvider({ children }) {
 
         localStorage.setItem("token", JSON.stringify(response.data.token));
         localStorage.setItem("user", JSON.stringify(response.data));
+
+        // setCookie("cookieName", "cookieValue", {
+        //   path: "/",
+        //   expires: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 4,
+        // });
+
         window.location.href = "/";
       }
     } catch (error) {
@@ -60,7 +56,9 @@ function AuthProvider({ children }) {
 
   return (
     <Context.Provider value={{ handleLogin, user, setUser }}>
-      {children}
+      <CookiesProvider defaultSetOptions={{ path: "/" }}>
+        {children}
+      </CookiesProvider>
     </Context.Provider>
   );
 }

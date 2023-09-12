@@ -3,6 +3,7 @@ import api from "../../api/api";
 import {
   ContainerTasks,
   StyledLabel,
+  StyledMsg,
   StyledTasks,
   SubContainerTasks,
 } from "./styles";
@@ -14,12 +15,14 @@ import { useNavigate } from "react-router-dom";
 function Tasks() {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
+  const usuario = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get("/task");
+        const { data } = await api.get(`/task/${usuario.id}`);
         setTasks(data);
+        console.log(data);
         if (data.error) {
           console.log("erro");
         }
@@ -34,11 +37,15 @@ function Tasks() {
     <ContainerTasks>
       <h1>minhas tarefas</h1>
       <SubContainerTasks>
-        {tasks.map((task) => {
-          return (
+        {tasks.length == 0 ? (
+          <StyledMsg>
+            <p>Você ainda não tem tarefas cadastradas</p>
+          </StyledMsg>
+        ) : (
+          tasks.map((task) => (
             <StyledTasks key={task.id}>
-              <input type="checkbox" id={task.id} checked={task.checked} />
               <StyledLabel htmlFor={task.id}>
+                <input type="checkbox" id={task.id} checked={task.checked} />
                 <p> {task.tarefa}</p>
                 <StyledButtons>
                   <FaPencilAlt />
@@ -48,8 +55,8 @@ function Tasks() {
                 </StyledButtons>
               </StyledLabel>
             </StyledTasks>
-          );
-        })}
+          ))
+        )}
       </SubContainerTasks>
     </ContainerTasks>
   );
