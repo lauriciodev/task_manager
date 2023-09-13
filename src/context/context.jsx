@@ -7,7 +7,7 @@ const Context = createContext();
 /*eslint-disable */
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [cookies, setCookie] = useCookies(["cookieName"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   async function handleLogin(event, email, password) {
     event.preventDefault();
@@ -28,20 +28,20 @@ function AuthProvider({ children }) {
           progress: undefined,
           theme: "dark",
         });
+        api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
 
-        localStorage.setItem("token", JSON.stringify(response.data.token));
-        localStorage.setItem("user", JSON.stringify(response.data));
+        setCookie("user", response.data, {
+          path: "/",
+        });
 
-        // setCookie("cookieName", "cookieValue", {
-        //   path: "/",
-        //   expires: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 4,
-        // });
+        console.log("logado");
+        console.log(response.data.token);
 
         window.location.href = "/";
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.msg, {
+      toast.error("Email ou senha incorretos", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

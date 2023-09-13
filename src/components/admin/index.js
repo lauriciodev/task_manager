@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-
-const token = localStorage.getItem("token");
+import { useCookies } from "react-cookie";
 
 function Admin({ children }) {
+  const [cookie] = useCookies(["user"]);
   useEffect(() => {
-    if (!token) {
+    if (!cookie.user.token) {
       window.location.href = "/login";
     }
   }, []);

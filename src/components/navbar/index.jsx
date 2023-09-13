@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { StyledButtons } from "../../global/styles";
 import { NavStyled } from "./style";
+import { useCookies } from "react-cookie";
 
 function NavBar() {
   const navigate = useNavigate();
-  const usuario = JSON.parse(localStorage.getItem("user"));
+  const [cookies, removeCookie] = useCookies(["user"]);
   function HandleLogout() {
-    localStorage.setItem("token", JSON.stringify(""));
+    removeCookie(["user"]);
     navigate("/login");
   }
 
@@ -14,7 +15,7 @@ function NavBar() {
     <NavStyled>
       <StyledButtons onClick={() => HandleLogout()}>Sair</StyledButtons>
       <p>
-        Seja bem-vindo(a): <span>{usuario.nome}</span>
+        Seja bem-vindo(a): <span>{cookies.user.nome}</span>
       </p>
     </NavStyled>
   );
