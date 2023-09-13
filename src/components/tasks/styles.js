@@ -8,7 +8,7 @@ export const ContainerTasks = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 460px) {
-    padding: 0px 40px;
+    padding: 0px 0px;
   }
 `;
 

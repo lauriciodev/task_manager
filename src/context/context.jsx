@@ -1,13 +1,12 @@
 import { createContext, useState } from "react";
 import api from "../api/api";
 import { toast } from "react-toastify";
-import { CookiesProvider, useCookies } from "react-cookie";
+import { setCookie } from "nookies";
 
 const Context = createContext();
 /*eslint-disable */
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   async function handleLogin(event, email, password) {
     event.preventDefault();
@@ -28,14 +27,24 @@ function AuthProvider({ children }) {
           progress: undefined,
           theme: "dark",
         });
-        api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
 
-        setCookie("user", response.data, {
+        const expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + 12 * 60 * 60 * 1000);
+
+        setCookie(undefined, "userToken", response.data.token, {
+          expires: expirationDate,
           path: "/",
         });
 
-        console.log("logado");
-        console.log(response.data.token);
+        setCookie(undefined, "userId", response.data.id, {
+          expires: expirationDate,
+          path: "/",
+        });
+
+        setCookie(undefined, "userNome", response.data.nome, {
+          expires: expirationDate,
+          path: "/",
+        });
 
         window.location.href = "/";
       }
@@ -56,9 +65,7 @@ function AuthProvider({ children }) {
 
   return (
     <Context.Provider value={{ handleLogin, user, setUser }}>
-      <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        {children}
-      </CookiesProvider>
+      {children}
     </Context.Provider>
   );
 }

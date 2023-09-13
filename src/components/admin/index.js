@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { parseCookies } from "nookies";
 
 function Admin({ children }) {
-  const [cookie] = useCookies(["user"]);
+  const { ["userToken"]: token } = parseCookies();
+
   useEffect(() => {
-    if (!cookie.user.token) {
+    if (!token) {
       window.location.href = "/login";
     }
   }, []);

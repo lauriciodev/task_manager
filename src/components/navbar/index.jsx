@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { StyledButtons } from "../../global/styles";
 import { NavStyled } from "./style";
-import { useCookies } from "react-cookie";
+import { parseCookies, destroyCookie } from "nookies";
 
 function NavBar() {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["user"]);
+  const { ["userNome"]: nome } = parseCookies();
+
   function HandleLogout() {
-    removeCookie(["user"]);
+    destroyCookie(null, ["userToken"]);
+    destroyCookie(null, ["userId"]);
+    destroyCookie(null, ["userNome"]);
     navigate("/login");
   }
 
@@ -15,7 +18,7 @@ function NavBar() {
     <NavStyled>
       <StyledButtons onClick={() => HandleLogout()}>Sair</StyledButtons>
       <p>
-        Seja bem-vindo(a): <span>{cookies.user.nome}</span>
+        Seja bem-vindo(a): <span>{nome}</span>
       </p>
     </NavStyled>
   );

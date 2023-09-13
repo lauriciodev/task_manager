@@ -11,20 +11,22 @@ import {
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { StyledButtons } from "../../global/styles";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { parseCookies } from "nookies";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
-  const [cookie] = useCookies(["user"]);
+  const { ["userToken"]: token } = parseCookies();
+  const { ["userId"]: id } = parseCookies();
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get(`/task/${cookie.user.id}`);
+        const { data } = await api.get(`/task/${id}`);
+        console.log("tasks ", token);
         setTasks(data);
       } catch (error) {
-        console.log(cookie);
+        console.log("taks erro");
         navigate("/login");
       }
     })();

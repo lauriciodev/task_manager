@@ -31,3 +31,7 @@ export const StyledButtons = styled.button`
     background-color: #72c988;
   }
 `;
+
+export const MainContainer = styled.div`
+  width: 100%;
+`;

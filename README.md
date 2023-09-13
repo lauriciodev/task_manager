@@ -1,16 +1,17 @@
 Sisteminha para me ajudar a gerenciar minhas tarefas
 
-checklist
+# checklist
 
-## global
+### usuarios
 
-salvar dados do usuario no context de forma que fique permanente
+`validação de dados ao cadastrar novo usuario
+tratar erros ao cadastrar novo usuario`
 
-## usuarios
+### tarefas
 
-validação de dados ao cadastrar novo usuario
-tratar erros ao cadastrar novo usuario
-
-## tarefas
-
-filtrar tarefas pelo id do usuario
+filtrar tarefas pelo id do usuario ok
+visualizar tarefas ok
+criar tarefas
+deletar tarefas
+editar tarefas
+adicionar clientes para cada tarefa

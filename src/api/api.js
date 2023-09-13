@@ -1,6 +1,9 @@
 import axios from "axios";
 
-console.log(getCookie("username")); // "John Doe"
+import { parseCookies } from "nookies";
+
+const { ["userToken"]: token } = parseCookies();
+
 export default axios.create({
   baseURL: "http://localhost:3000",
   headers: {
