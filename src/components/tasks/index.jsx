@@ -12,18 +12,18 @@ import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { StyledButtons } from "../../global/styles";
 import { useNavigate } from "react-router-dom";
 import { parseCookies } from "nookies";
+import NewTaks from "../newTaks";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
+
   const navigate = useNavigate();
-  const { ["userToken"]: token } = parseCookies();
   const { ["userId"]: id } = parseCookies();
 
   useEffect(() => {
     (async () => {
       try {
         const { data } = await api.get(`/task/${id}`);
-        console.log("tasks ", token);
         setTasks(data);
       } catch (error) {
         console.log("taks erro");
@@ -34,6 +34,7 @@ function Tasks() {
 
   return (
     <ContainerTasks>
+      <NewTaks />
       <h1>minhas tarefas</h1>
       <SubContainerTasks>
         {tasks.length == 0 ? (

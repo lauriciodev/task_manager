@@ -7,6 +7,7 @@ const Context = createContext();
 /*eslint-disable */
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [modalOn, setModalOn] = useState(false);
 
   async function handleLogin(event, email, password) {
     event.preventDefault();
@@ -64,7 +65,9 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ handleLogin, user, setUser }}>
+    <Context.Provider
+      value={{ handleLogin, user, setUser, modalOn, setModalOn }}
+    >
       {children}
     </Context.Provider>
   );
