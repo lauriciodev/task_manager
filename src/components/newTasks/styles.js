@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledModal = styled.div`
-  background-color: transparent;
+  background-color: #14141ccf;
   width: 100%;
   height: 100%;
   position: absolute;

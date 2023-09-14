@@ -12,7 +12,8 @@ import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { StyledButtons } from "../../global/styles";
 import { useNavigate } from "react-router-dom";
 import { parseCookies } from "nookies";
-import NewTaks from "../newTaks";
+import NewTasks from "../newTasks";
+import { toast } from "react-toastify";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -32,9 +33,39 @@ function Tasks() {
     })();
   }, []);
 
+  async function handleDeleteTask(id) {
+    try {
+      const { data } = await api.delete(`/task/${id}`);
+      toast.success("Usuario deletado com sucesso!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      console.log(data);
+      window.location.href = "/";
+    } catch (error) {
+      await toast.error("Erro Desconhecido", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      window.location.href = "/login";
+    }
+  }
+
   return (
     <ContainerTasks>
-      <NewTaks />
+      <NewTasks />
       <h1>minhas tarefas</h1>
       <SubContainerTasks>
         {tasks.length == 0 ? (
@@ -50,7 +81,7 @@ function Tasks() {
                 <StyledButtons>
                   <FaPencilAlt />
                 </StyledButtons>
-                <StyledButtons>
+                <StyledButtons onClick={() => handleDeleteTask(task.id)}>
                   <FaTrash />
                 </StyledButtons>
               </StyledLabel>
