@@ -31,6 +31,7 @@ export const StyledTasks = styled.div`
   transition: all 0.4s;
   align-items: center;
   padding: 0px 4px;
+  background-color: ${(props) => props.background};
 
   &:hover {
     box-shadow: 1px 1px 3px #32c980;
@@ -53,6 +54,7 @@ export const StyledLabel = styled.label`
   p {
     width: 100%;
     text-align: left;
+    text-decoration: ${(props) => props.textstyle};
   }
 `;
 

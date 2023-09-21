@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
+  const [confirm, setConfirme] = useState(false);
 
   const navigate = useNavigate();
   const { ["userId"]: id } = parseCookies();
@@ -63,6 +64,18 @@ function Tasks() {
     }
   }
 
+  async function handleCheckTask(id, checked) {
+    try {
+      const result = await api.put(`/task/${id}`, {
+        checked: checked,
+      });
+      console.log(result);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <ContainerTasks>
       <NewTasks />
@@ -74,16 +87,32 @@ function Tasks() {
           </StyledMsg>
         ) : (
           tasks.map((task) => (
-            <StyledTasks key={task.id}>
+            <StyledTasks
+              key={task.id}
+              background={task.checked ? "#243f2b73" : "#8b1e1e0"}
+            >
               <StyledLabel htmlFor={task.id}>
-                <input type="checkbox" id={task.id} checked={task.checked} />
-                <p> {task.tarefa}</p>
+                <input
+                  onChange={() => handleCheckTask(task.id, !task.checked)}
+                  type="checkbox"
+                  id={task.id}
+                  checked={task.checked}
+                />
+                <p textstyle={task.checked ? "line-through" : "line-through"}>
+                  {task.tarefa}
+                </p>
                 <StyledButtons>
                   <FaPencilAlt />
                 </StyledButtons>
-                <StyledButtons onClick={() => handleDeleteTask(task.id)}>
-                  <FaTrash />
-                </StyledButtons>
+                {confirm ? (
+                  <StyledButtons onClick={() => handleDeleteTask(task.id)}>
+                    !
+                  </StyledButtons>
+                ) : (
+                  <StyledButtons onClick={() => setConfirme(!confirm)}>
+                    <FaTrash />
+                  </StyledButtons>
+                )}
               </StyledLabel>
             </StyledTasks>
           ))
