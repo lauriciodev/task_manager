@@ -17,7 +17,6 @@ import { toast } from "react-toastify";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
-  const [confirm, setConfirme] = useState(false);
 
   const navigate = useNavigate();
   const { ["userId"]: id } = parseCookies();
@@ -69,7 +68,6 @@ function Tasks() {
       const result = await api.put(`/task/${id}`, {
         checked: checked,
       });
-      console.log(result);
       window.location.href = "/";
     } catch (error) {
       console.log(error);
@@ -104,15 +102,9 @@ function Tasks() {
                 <StyledButtons>
                   <FaPencilAlt />
                 </StyledButtons>
-                {confirm ? (
                   <StyledButtons onClick={() => handleDeleteTask(task.id)}>
-                    !
-                  </StyledButtons>
-                ) : (
-                  <StyledButtons onClick={() => setConfirme(!confirm)}>
                     <FaTrash />
                   </StyledButtons>
-                )}
               </StyledLabel>
             </StyledTasks>
           ))
