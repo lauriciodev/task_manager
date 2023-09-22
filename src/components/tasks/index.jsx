@@ -75,6 +75,9 @@ function Tasks() {
     }
   }
 
+  //lauricio esteve aqui
+  
+
   return (
     <ContainerTasks>
       <NewTasks getData={getData} />
