@@ -22,16 +22,18 @@ function Tasks() {
   const { ["userId"]: id } = parseCookies();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.get(`/task/${id}`);
-        setTasks(data);
-      } catch (error) {
-        console.log("taks erro");
-        navigate("/login");
-      }
-    })();
+   getData()
   }, []);
+
+  async function getData(){
+    try {
+      const { data } = await api.get(`/task/${id}`);
+      setTasks(data);
+    } catch (error) {
+      console.log("taks erro");
+      navigate("/login");
+    }
+  }
 
   async function handleDeleteTask(id) {
     try {
@@ -46,8 +48,7 @@ function Tasks() {
         progress: undefined,
         theme: "dark",
       });
-      console.log(data);
-      window.location.href = "/";
+    getData()
     } catch (error) {
       await toast.error("Erro Desconhecido", {
         position: "top-center",
@@ -68,7 +69,7 @@ function Tasks() {
       const result = await api.put(`/task/${id}`, {
         checked: checked,
       });
-      window.location.href = "/";
+     getData();
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +77,7 @@ function Tasks() {
 
   return (
     <ContainerTasks>
-      <NewTasks />
+      <NewTasks getData={getData} />
       <h1>minhas tarefas</h1>
       <SubContainerTasks>
         {tasks.length == 0 ? (

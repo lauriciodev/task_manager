@@ -7,7 +7,7 @@ import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-function NewTasks() {
+function NewTasks({getData}) {
   const navigate = useNavigate();
   const { modalOn, setModalOn } = useContext(Context);
   const { ["userId"]: id } = parseCookies();
@@ -30,7 +30,8 @@ function NewTasks() {
         progress: undefined,
         theme: "dark",
       });
-      window.location.href = "/";
+      getData()
+      setModalOn(false)
     } catch (error) {
       navigate("/login");
       toast.error("Erro desconhecido", {
