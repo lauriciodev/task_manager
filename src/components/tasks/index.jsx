@@ -35,6 +35,10 @@ function Tasks() {
     }
   }
 
+  async function loadData(){
+    setTasks(tasks) 
+   }
+
   async function handleDeleteTask(id) {
     try {
       const { data } = await api.delete(`/task/${id}`);
@@ -48,7 +52,7 @@ function Tasks() {
         progress: undefined,
         theme: "dark",
       });
-    getData()
+      loadData()
     } catch (error) {
       await toast.error("Erro Desconhecido", {
         position: "top-center",
@@ -69,14 +73,17 @@ function Tasks() {
       const result = await api.put(`/task/${id}`, {
         checked: checked,
       });
-     getData();
+     setTasks( tasks.map((item) => item.id === id ? ({
+      ...item,
+      checked: true
+    }) : item))
     } catch (error) {
       console.log(error);
     }
   }
 
   //lauricio esteve aqui
-  
+
 
   return (
     <ContainerTasks>
