@@ -22,10 +22,10 @@ function Tasks() {
   const { ["userId"]: id } = parseCookies();
 
   useEffect(() => {
-   getData()
+    getData();
   }, []);
 
-  async function getData(){
+  async function getData() {
     try {
       const { data } = await api.get(`/task/${id}`);
       setTasks(data);
@@ -35,9 +35,9 @@ function Tasks() {
     }
   }
 
-  async function loadData(){
-    setTasks(tasks) 
-   }
+  async function loadData() {
+    setTasks(tasks);
+  }
 
   async function handleDeleteTask(id) {
     try {
@@ -52,7 +52,7 @@ function Tasks() {
         progress: undefined,
         theme: "dark",
       });
-      loadData()
+      loadData();
     } catch (error) {
       await toast.error("Erro Desconhecido", {
         position: "top-center",
@@ -73,17 +73,22 @@ function Tasks() {
       const result = await api.put(`/task/${id}`, {
         checked: checked,
       });
-     setTasks( tasks.map((item) => item.id === id ? ({
-      ...item,
-      checked: true
-    }) : item))
+      setTasks(
+        tasks.map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                checked: checked,
+              }
+            : item
+        )
+      );
     } catch (error) {
       console.log(error);
     }
   }
 
   //lauricio esteve aqui
-
 
   return (
     <ContainerTasks>
@@ -113,9 +118,9 @@ function Tasks() {
                 <StyledButtons>
                   <FaPencilAlt />
                 </StyledButtons>
-                  <StyledButtons onClick={() => handleDeleteTask(task.id)}>
-                    <FaTrash />
-                  </StyledButtons>
+                <StyledButtons onClick={() => handleDeleteTask(task.id)}>
+                  <FaTrash />
+                </StyledButtons>
               </StyledLabel>
             </StyledTasks>
           ))
