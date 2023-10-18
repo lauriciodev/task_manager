@@ -73,3 +73,24 @@ export const StyledMsg = styled.div`
     width: 100%;
   }
 `;
+
+export const ModalDelete = styled.div`
+  width: 300px;
+  height: 120px;
+  background-color: #172534;
+  position: absolute;
+  top: 130px;
+  display: ${(props) => props.display};
+
+  p {
+    color: #fff;
+    text-align: center;
+  }
+`;
+
+export const ContainerButtonsStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../../api/api";
 import {
+  ContainerButtonsStyled,
   ContainerTasks,
+  ModalDelete,
   StyledLabel,
   StyledMsg,
   StyledTasks,
@@ -17,6 +19,8 @@ import { toast } from "react-toastify";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [taskId, setTaskId] = useState(null);
 
   const navigate = useNavigate();
   const { ["userId"]: id } = parseCookies();
@@ -24,6 +28,11 @@ function Tasks() {
   useEffect(() => {
     getData();
   }, []);
+
+  function showModal(idTask) {
+    setTaskId(idTask);
+    setConfirmDelete(true);
+  }
 
   async function getData() {
     try {
@@ -42,7 +51,7 @@ function Tasks() {
   async function handleDeleteTask(id) {
     try {
       const { data } = await api.delete(`/task/${id}`);
-      toast.success("Usuario deletado com sucesso!", {
+      toast.success("Tarefa deletado com sucesso!", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -52,6 +61,7 @@ function Tasks() {
         progress: undefined,
         theme: "dark",
       });
+      setConfirmDelete(false);
       loadData();
     } catch (error) {
       await toast.error("Erro Desconhecido", {
@@ -92,6 +102,17 @@ function Tasks() {
 
   return (
     <ContainerTasks>
+      <ModalDelete display={confirmDelete ? "block" : "none"}>
+        <p>Deseja realmente deletar esta tarefa?</p>
+        <ContainerButtonsStyled>
+          <StyledButtons onClick={() => setConfirmDelete(false)}>
+            Cancelar
+          </StyledButtons>
+          <StyledButtons onClick={() => handleDeleteTask(taskId)}>
+            Confirmar
+          </StyledButtons>
+        </ContainerButtonsStyled>
+      </ModalDelete>
       <NewTasks getData={getData} />
       <h1>minhas tarefas</h1>
       <SubContainerTasks>
@@ -118,7 +139,7 @@ function Tasks() {
                 <StyledButtons>
                   <FaPencilAlt />
                 </StyledButtons>
-                <StyledButtons onClick={() => handleDeleteTask(task.id)}>
+                <StyledButtons onClick={() => showModal(task.id)}>
                   <FaTrash />
                 </StyledButtons>
               </StyledLabel>
