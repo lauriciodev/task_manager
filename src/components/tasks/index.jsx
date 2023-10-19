@@ -51,9 +51,21 @@ function Tasks() {
   async function handleDeleteTask(id) {
     try {
       const { data } = await api.delete(`/task/${id}`);
+
+      setTasks(
+        tasks.map((item) =>
+          item.id !== id
+            ? {
+                ...item,
+                checked: "checked",
+              }
+            : item
+        )
+      );
+
       toast.success("Tarefa deletado com sucesso!", {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -61,12 +73,12 @@ function Tasks() {
         progress: undefined,
         theme: "dark",
       });
+
       setConfirmDelete(false);
-      loadData();
     } catch (error) {
       await toast.error("Erro Desconhecido", {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -136,7 +148,7 @@ function Tasks() {
                 <p textstyle={task.checked ? "line-through" : "line-through"}>
                   {task.tarefa}
                 </p>
-                <StyledButtons>
+                <StyledButtons onClick={() => showModalEdit(task.id)}>
                   <FaPencilAlt />
                 </StyledButtons>
                 <StyledButtons onClick={() => showModal(task.id)}>
