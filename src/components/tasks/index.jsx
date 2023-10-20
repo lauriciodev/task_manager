@@ -52,20 +52,12 @@ function Tasks() {
     try {
       const { data } = await api.delete(`/task/${id}`);
 
-      setTasks(
-        tasks.map((item) =>
-          item.id !== id
-            ? {
-                ...item,
-                checked: "checked",
-              }
-            : item
-        )
-      );
+      const filteredTasks = tasks.filter((item) => item.id !== id);
+      setTasks(filteredTasks);
 
-      toast.success("Tarefa deletado com sucesso!", {
+      toast.success("Tarefa deletada com sucesso!", {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -78,7 +70,7 @@ function Tasks() {
     } catch (error) {
       await toast.error("Erro Desconhecido", {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
