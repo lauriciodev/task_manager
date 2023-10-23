@@ -17,7 +17,7 @@ export const ModalContainer = styled.div`
   height: 120px;
   background-color: #14141c;
   border: 1px solid #33a4d4;
-  display: flex;
+  display: ${(props) => props.display};
   border-radius: 10px;
   flex-direction: column;
   gap: 10px;

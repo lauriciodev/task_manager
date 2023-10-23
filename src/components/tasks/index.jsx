@@ -3,6 +3,7 @@ import api from "../../api/api";
 import {
   ContainerButtonsStyled,
   ContainerTasks,
+  ModalContainerSyled,
   ModalDelete,
   StyledLabel,
   StyledMsg,
@@ -20,8 +21,9 @@ import { toast } from "react-toastify";
 function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmEdit, setConfirmEdit] = useState(false);
   const [taskId, setTaskId] = useState(null);
-
+  const [taskEdit, setTaskEdit] = useState(null);
   const navigate = useNavigate();
   const { ["userId"]: id } = parseCookies();
 
@@ -32,6 +34,23 @@ function Tasks() {
   function showModal(idTask) {
     setTaskId(idTask);
     setConfirmDelete(true);
+  }
+
+   async function showModalEdit(idTask) {
+    setConfirmEdit(true);
+    const task = await getTaskById(idTask);
+    const mytask = task.filter((task) => task.id == idTask);
+     setTaskEdit(mytask[0].tarefa);
+
+  }
+
+  async function getTaskById(id){
+  try {
+   const task = await api.get(`/taskid/${id}`);
+    return task.data
+  } catch (error) {
+   console.log("erro ao obter tarefas especifica",error);    
+  }
   }
 
   async function getData() {
@@ -117,6 +136,16 @@ function Tasks() {
           </StyledButtons>
         </ContainerButtonsStyled>
       </ModalDelete>
+
+      <ModalContainerSyled  display={confirmEdit ? "flex" : "none"}>
+      <textarea value={taskEdit}></textarea>
+      <ContainerButtonsStyled>
+       <StyledButtons>Salvar</StyledButtons>
+         <StyledButtons onClick={() => setConfirmEdit(false)}>Cancelar</StyledButtons>
+      </ContainerButtonsStyled>
+     
+     </ModalContainerSyled>
+
       <NewTasks getData={getData} />
       <h1>minhas tarefas</h1>
       <SubContainerTasks>

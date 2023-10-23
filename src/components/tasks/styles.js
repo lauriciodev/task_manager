@@ -94,3 +94,29 @@ export const ContainerButtonsStyled = styled.div`
   justify-content: center;
   gap: 10px;
 `;
+
+
+export const ModalContainerSyled = styled.div`
+  background-color: #172534;
+  position:absolute;
+  top:100px;
+  height:150px;
+  width:380px;
+  padding:5px;
+  display:${(props) => props.display};
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+  
+
+
+  textarea{
+    height:120px;
+    background-color: transparent;
+    color: #32c870;
+    border-radius: 10px;
+    border:1px solid #32c98840 ;
+    width: 100%;
+  }
+  
+`;
