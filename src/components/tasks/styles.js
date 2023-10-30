@@ -99,6 +99,8 @@ export const ContainerButtonsStyled = styled.div`
 export const ModalContainerSyled = styled.div`
   background-color: #172534;
   position:absolute;
+  border-radius:10px;
+
   top:100px;
   height:150px;
   width:380px;

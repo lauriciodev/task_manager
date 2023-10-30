@@ -12,25 +12,25 @@ export const StyledModal = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  width: 100%;
-  max-width: 700px;
-  height: 120px;
-  background-color: #14141c;
-  border: 1px solid #33a4d4;
-  display: ${(props) => props.display};
-  border-radius: 10px;
-  flex-direction: column;
-  gap: 10px;
-  padding: 15px 20px;
-  align-items: center;
+   background-color: #172534;
+  position:absolute;
+  top:100px;
+  height:150px;
+  width:100%;
+  max-width:400px;
+  border-radius:10px;
+  padding:5px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
 
   textarea {
-    resize: none;
-    height: 100%;
+  height:120px;
     background-color: transparent;
     color: #32c870;
-    padding: 10px;
     border-radius: 10px;
+    border:1px solid #32c98840 ;
     width: 100%;
   }
 `;

@@ -49,7 +49,7 @@ function NewTasks({getData}) {
 
   return (
     <StyledModal display={modalOn ? "flex" : "none"}>
-      <ModalContainer>
+      <ModalContainer >
         <textarea
           placeholder="Insira nova tarefa"
           onChange={(e) => setTask(e.target.value)}

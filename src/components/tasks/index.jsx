@@ -37,19 +37,53 @@ function Tasks() {
   }
 
    async function showModalEdit(idTask) {
+    setTaskId(idTask)
     setConfirmEdit(true);
     const task = await getTaskById(idTask);
     const mytask = task.filter((task) => task.id == idTask);
      setTaskEdit(mytask[0].tarefa);
-
   }
+  
+
+  async function updateTask(id){
+    try {
+      const result = await api.put(`/task/${id}`,{
+      tarefa:taskEdit
+  });
+
+      setTasks(tasks.filter((item) => item.id !== 0));
+
+    toast.success("Tarefa atualizada com sucesso!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        theme: "dark",
+      });
+
+   } catch (error) {
+     console.log(error);
+   }
+   }
+
+
+
+   function teste(value){
+   
+   setTaskEdit(value)
+   console.log(taskEdit)
+   }
+
+  
 
   async function getTaskById(id){
   try {
    const task = await api.get(`/taskid/${id}`);
     return task.data
   } catch (error) {
-   console.log("erro ao obter tarefas especifica",error);    
+   console.log("Erro ao obter tarefa especifica",error);    
   }
   }
 
@@ -138,9 +172,9 @@ function Tasks() {
       </ModalDelete>
 
       <ModalContainerSyled  display={confirmEdit ? "flex" : "none"}>
-      <textarea value={taskEdit}></textarea>
+      <textarea onChange={(task) => setTaskEdit(task.target.value)} value={taskEdit}></textarea>
       <ContainerButtonsStyled>
-       <StyledButtons>Salvar</StyledButtons>
+       <StyledButtons onClick={() => updateTask(taskId)}>Salvar</StyledButtons>
          <StyledButtons onClick={() => setConfirmEdit(false)}>Cancelar</StyledButtons>
       </ContainerButtonsStyled>
      
