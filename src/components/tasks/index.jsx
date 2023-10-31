@@ -47,13 +47,16 @@ function Tasks() {
 
   async function updateTask(id){
     try {
-      const result = await api.put(`/task/${id}`,{
+      const {data} = await api.put(`/task/${id}`,{
       tarefa:taskEdit
   });
 
-      setTasks(tasks.filter((item) => item.id !== 0));
-
-    toast.success("Tarefa atualizada com sucesso!", {
+  const taskUpdate = tasks.map((task) => task.id == id ? {
+    ...task,
+    tarefa:taskEdit
+  }: task);
+  setTasks(taskUpdate)
+  toast.success("Tarefa atualizada com sucesso!", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -63,20 +66,12 @@ function Tasks() {
         theme: "dark",
       });
 
+  setConfirmEdit(false)
+
    } catch (error) {
      console.log(error);
    }
    }
-
-
-
-   function teste(value){
-   
-   setTaskEdit(value)
-   console.log(taskEdit)
-   }
-
-  
 
   async function getTaskById(id){
   try {
@@ -92,7 +87,6 @@ function Tasks() {
       const { data } = await api.get(`/task/${id}`);
       setTasks(data);
     } catch (error) {
-      console.log("taks erro");
       navigate("/login");
     }
   }
