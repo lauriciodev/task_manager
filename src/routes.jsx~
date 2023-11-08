@@ -28,4 +28,4 @@ const MyRoutes = createBrowserRouter([
   },
 ]);
 
-export default MyRoutes;
+export default myRoutes;
