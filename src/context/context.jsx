@@ -54,6 +54,7 @@ function AuthProvider({ children }) {
         });
       }
     } catch (error) {
+      console.log(error);
       position: "top-center",
         toast.error("Email ou senha incorretos", {
           hideProgressBar: false,

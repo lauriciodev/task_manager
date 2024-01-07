@@ -7,7 +7,7 @@ import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-function NewTasks({getData}) {
+function NewTasks({ getData }) {
   const navigate = useNavigate();
   const { modalOn, setModalOn } = useContext(Context);
   const { ["userId"]: id } = parseCookies();
@@ -18,7 +18,7 @@ function NewTasks({getData}) {
       const { data } = await api.post("/task", {
         tarefa: task,
         checked: false,
-        userId: id,
+        userId: Number(id),
       });
       toast.success("Tarefa criada com sucesso", {
         position: "top-center",
@@ -30,8 +30,9 @@ function NewTasks({getData}) {
         progress: undefined,
         theme: "dark",
       });
-      getData()
-      setModalOn(false)
+      console.log(data);
+      getData();
+      setModalOn(false);
     } catch (error) {
       navigate("/login");
       toast.error("Erro desconhecido", {
@@ -49,7 +50,7 @@ function NewTasks({getData}) {
 
   return (
     <StyledModal display={modalOn ? "flex" : "none"}>
-      <ModalContainer >
+      <ModalContainer>
         <textarea
           placeholder="Insira nova tarefa"
           onChange={(e) => setTask(e.target.value)}
