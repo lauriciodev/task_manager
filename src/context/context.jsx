@@ -17,12 +17,7 @@ function AuthProvider({ children }) {
         password,
       });
 
-
-
       if (response) {
-      
-
-
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + 12 * 60 * 60 * 1000);
 
@@ -41,13 +36,13 @@ function AuthProvider({ children }) {
           path: "/",
         });
 
-         setCookie(undefined, "userEmail", response.data.email, {
+        setCookie(undefined, "userEmail", response.data.email, {
           expires: expirationDate,
           path: "/",
         });
 
         window.location.href = "/";
-          toast.success(`seja bem vindo(a) ${response.data.nome}`, {
+        toast.success(`seja bem vindo(a) ${response.data.nome}`, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -59,17 +54,15 @@ function AuthProvider({ children }) {
         });
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Email ou senha incorretos", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      position: "top-center",
+        toast.error("Email ou senha incorretos", {
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
     }
   }
 

@@ -36,27 +36,30 @@ function Tasks() {
     setConfirmDelete(true);
   }
 
-   async function showModalEdit(idTask) {
-    setTaskId(idTask)
+  async function showModalEdit(idTask) {
+    setTaskId(idTask);
     setConfirmEdit(true);
     const task = await getTaskById(idTask);
     const mytask = task.filter((task) => task.id == idTask);
-     setTaskEdit(mytask[0].tarefa);
+    setTaskEdit(mytask[0].tarefa);
   }
-  
 
-  async function updateTask(id){
+  async function updateTask(id) {
     try {
-      const {data} = await api.put(`/task/${id}`,{
-      tarefa:taskEdit
-  });
+      const { data } = await api.put(`/task/${id}`, {
+        tarefa: taskEdit,
+      });
 
-  const taskUpdate = tasks.map((task) => task.id == id ? {
-    ...task,
-    tarefa:taskEdit
-  }: task);
-  setTasks(taskUpdate)
-  toast.success("Tarefa atualizada com sucesso!", {
+      const taskUpdate = tasks.map((task) =>
+        task.id == id
+          ? {
+              ...task,
+              tarefa: taskEdit,
+            }
+          : task
+      );
+      setTasks(taskUpdate);
+      toast.success("Tarefa atualizada com sucesso!", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -66,27 +69,28 @@ function Tasks() {
         theme: "dark",
       });
 
-  setConfirmEdit(false)
-
-   } catch (error) {
-     console.log(error);
-   }
-   }
-
-  async function getTaskById(id){
-  try {
-   const task = await api.get(`/taskid/${id}`);
-    return task.data
-  } catch (error) {
-   console.log("Erro ao obter tarefa especifica",error);    
+      setConfirmEdit(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  async function getTaskById(id) {
+    try {
+      const task = await api.get(`/taskid/${id}`);
+      return task.data;
+    } catch (error) {
+      console.log("Erro ao obter tarefa especifica", error);
+    }
   }
 
   async function getData() {
     try {
       const { data } = await api.get(`/task/${id}`);
+      console.log(data);
       setTasks(data);
     } catch (error) {
+      console.log(error);
       navigate("/login");
     }
   }
@@ -165,14 +169,20 @@ function Tasks() {
         </ContainerButtonsStyled>
       </ModalDelete>
 
-      <ModalContainerSyled  display={confirmEdit ? "flex" : "none"}>
-      <textarea onChange={(task) => setTaskEdit(task.target.value)} value={taskEdit}></textarea>
-      <ContainerButtonsStyled>
-       <StyledButtons onClick={() => updateTask(taskId)}>Salvar</StyledButtons>
-         <StyledButtons onClick={() => setConfirmEdit(false)}>Cancelar</StyledButtons>
-      </ContainerButtonsStyled>
-     
-     </ModalContainerSyled>
+      <ModalContainerSyled display={confirmEdit ? "flex" : "none"}>
+        <textarea
+          onChange={(task) => setTaskEdit(task.target.value)}
+          value={taskEdit}
+        ></textarea>
+        <ContainerButtonsStyled>
+          <StyledButtons onClick={() => updateTask(taskId)}>
+            Salvar
+          </StyledButtons>
+          <StyledButtons onClick={() => setConfirmEdit(false)}>
+            Cancelar
+          </StyledButtons>
+        </ContainerButtonsStyled>
+      </ModalContainerSyled>
 
       <NewTasks getData={getData} />
       <h1>minhas tarefas</h1>

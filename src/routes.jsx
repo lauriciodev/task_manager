@@ -4,7 +4,6 @@ import NotFound from "./pages/NotFound";
 import Login from "./components/login";
 import Admin from "./components/admin";
 import NewUser from "./components/newUser";
-import Info from "./components/info";
 
 const MyRoutes = createBrowserRouter([
   {
@@ -22,10 +21,6 @@ const MyRoutes = createBrowserRouter([
   {
     path: "/user/new",
     element: <NewUser />,
-  },
-  {
-    path: "/user/info",
-    element: <Info />,
   },
   {
     path: "*",
