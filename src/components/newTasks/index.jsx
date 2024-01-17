@@ -20,6 +20,7 @@ function NewTasks({ getData }) {
         checked: false,
         userId: Number(id),
       });
+      setTask("")
       toast.success("Tarefa criada com sucesso", {
         position: "top-center",
         autoClose: 5000,
@@ -30,7 +31,6 @@ function NewTasks({ getData }) {
         progress: undefined,
         theme: "dark",
       });
-      console.log(data);
       getData();
       setModalOn(false);
     } catch (error) {
@@ -54,6 +54,7 @@ function NewTasks({ getData }) {
         <textarea
           placeholder="Insira nova tarefa"
           onChange={(e) => setTask(e.target.value)}
+          re
         ></textarea>
 
         <ContainerButtons>

@@ -32,6 +32,7 @@ export const ModalContainer = styled.div`
     border-radius: 10px;
     border:1px solid #32c98840 ;
     width: 100%;
+    resize: none;
   }
 `;
 

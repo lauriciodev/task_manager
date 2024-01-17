@@ -37,10 +37,11 @@ function Tasks() {
   }
 
   async function showModalEdit(idTask) {
-    setTaskId(idTask);
-    setConfirmEdit(true);
-    const task = await getTaskById(idTask);
-    const mytask = task.filter((task) => task.id == idTask);
+      setTaskId(idTask);
+     setConfirmEdit(true);
+     const task = await getTaskById(idTask);
+     const mytask = task.filter((task) => task.id == idTask);
+     console.log(task)
     setTaskEdit(mytask[0].tarefa);
   }
 
@@ -77,7 +78,7 @@ function Tasks() {
 
   async function getTaskById(id) {
     try {
-      const task = await api.get(`/taskid/${id}`);
+      const task = await api.get(`/taskId/${id}`);
       return task.data;
     } catch (error) {
       console.log("Erro ao obter tarefa especifica", error);
@@ -86,7 +87,7 @@ function Tasks() {
 
   async function getData() {
     try {
-      const { data } = await api.get(`/task/${id}`);
+      const { data } = await api.get(`/taskUser/${id}`);
       console.log(data);
       setTasks(data);
     } catch (error) {
